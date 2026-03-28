@@ -1,11 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import yts from 'yt-search';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { youtubeDl } from './downloader.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.get('/api/search', async (req, res) => {
     try {
